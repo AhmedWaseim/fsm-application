@@ -1,0 +1,40 @@
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+from TrafficLight import TrafficLight
+
+def test_initial_state():
+    tl = TrafficLight()
+    assert tl.get_state() == "RED"
+
+def test_state_transitions():
+    tl = TrafficLight()
+    
+    # RED -> GREEN
+    tl.change()
+    assert tl.get_state() == "GREEN"
+    
+    # GREEN -> YELLOW
+    tl.change()
+    assert tl.get_state() == "YELLOW"
+    
+    # YELLOW -> RED
+    tl.change()
+    assert tl.get_state() == "RED"
+
+def test_cycle_completion():
+    tl = TrafficLight()
+    initial_state = tl.get_state()
+    
+    # Complete 2 full cycles
+    for _ in range(6):  # 2 cycles * 3 states
+        tl.change()
+    
+    assert tl.get_state() == initial_state
+
+if __name__ == "__main__":
+    test_initial_state()
+    test_state_transitions()
+    test_cycle_completion()
+    print("All tests passed!")
